@@ -25,7 +25,7 @@ public class SuperdoGroceries {
 
     private SuperdoGroceries(Context context) {
         groceries = new ArrayList<>();
-        superdoClient = new SuperdoClient(context.getString(R.string.superdo_client_host), new ISuperdoEventsListener() {
+        ISuperdoEventsListener clientEventsListener = new ISuperdoEventsListener() {
             @Override
             public void onConnectionChanged(SuperdoClientState newState) {
                 // maybe notify consumers
@@ -38,7 +38,13 @@ public class SuperdoGroceries {
                     eventsListener.onGroceriesDataChanged(groceries);
                 }
             }
-        });
+        };
+        superdoClient = new SuperdoClient(context.getString(R.string.superdo_client_host), clientEventsListener);
+    }
+
+    // other constructor for injecting client
+    public SuperdoGroceries(SuperdoClient superdoClient) {
+        setSuperdoClient(superdoClient);
     }
 
     public void getGroceries(ISuperdoGroceriesEventsListener eventsListener) {
@@ -53,4 +59,7 @@ public class SuperdoGroceries {
         superdoClient.Close();
     }
 
+    public void setSuperdoClient(SuperdoClient superdoClient) {
+        this.superdoClient = superdoClient;
+    }
 }

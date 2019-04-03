@@ -1,9 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <LinearLayout
+<layout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+<data>
+        <variable
+            name="viewModel"
+            type="com.phearme.superdomarket.MainViewModel"/>
+    </data>
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnStartStop"
+                android:onClick="@{() -> viewModel.onButtonClick()}"
+                android:text="@{viewModel.fetchingGroceries ? @string/stop : @string/start}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvGroceries"
+            tools:listitem="@layout/bag_item"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
     </LinearLayout>
+</layout>

@@ -65,10 +65,11 @@ public class SuperdoClient {
     }
 
     public void Close() {
-        if (wsClient != null && clientState == SuperdoClientState.OPEN) {
+        if (wsClient != null) {
             wsClient.close(WS_NORMAL_CLOSE_CODE, "requested by client");
             wsClient.cancel();
         }
+        changeClientState(SuperdoClientState.CLOSED);
     }
 
     private void changeClientState(SuperdoClientState newState) {
